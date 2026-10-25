@@ -230,8 +230,10 @@ const assert = require("node:assert/strict");
     );
     assert.match(
       await page.locator(".game-card").nth(2).innerText(),
-      /Final · SO/,
+      /FINAL \/ SO/,
     );
+    assert.equal(await page.locator(".game-card").nth(2).locator(".game-clock").count(), 0,
+      "Finished games show one final status without a duplicate clock label");
     assert.deepEqual(
       await page
         .locator(".game-card")

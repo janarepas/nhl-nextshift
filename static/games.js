@@ -274,8 +274,13 @@
                 const clockLabel = running ? (g.intermission ? "INT" : g.clock || "—")
                   : ["OFF", "FINAL"].includes(g.state) ? (["OT", "SO"].includes(g.outcome) ? g.outcome : "FT")
                   : ["FUT", "PRE"].includes(g.state) && !["PPD", "CNCL"].includes(g.scheduleState) ? formatter("score-start", zone, { hour:"2-digit", minute:"2-digit", hourCycle:"h23" }).format(new Date(g.start)) : "—";
+                const finished = ["OFF", "FINAL"].includes(g.state) && !["PPD", "CNCL"].includes(g.scheduleState);
+                const finalLabel = ["OT", "SO"].includes(g.outcome) ? `FINAL / ${g.outcome}` : "FINAL";
+                const statusMarkup = finished
+                  ? `<span class="game-status">${finalLabel}</span>`
+                  : `<span class="game-status">${escape(periodLabel)}</span><span class="game-clock">${escape(clockLabel)}</span>`;
                 const shots = (t) => !["FUT", "PRE"].includes(g.state) && Number.isInteger(t.shots) && t.shots >= 0 ? t.shots : "—";
-                return `<article class="game-card${running ? " is-live" : ""}" data-game="${g.id}" aria-label="${escape(g.away.code)} versus ${escape(g.home.code)}. ${escape(label)}"><div class="game-clock-panel"><span class="game-status">${escape(periodLabel)}</span><span class="game-clock">${escape(clockLabel)}</span><time class="game-date" datetime="${escape(g.start)}" title="Start time in Europe/Budapest · NHL game day: ${date}">${escape(start)}</time></div><div class="game-matchup">${side(g.away)}${side(g.home)}</div><div class="game-shots" aria-label="Shots on goal"><span class="game-shot game-shot-away" aria-label="${escape(g.away.code)} shots on goal">${shots(g.away)}</span><span class="game-sog">SOG</span><span class="game-shot game-shot-home" aria-label="${escape(g.home.code)} shots on goal">${shots(g.home)}</span></div></article>`;
+                return `<article class="game-card${running ? " is-live" : ""}${finished ? " is-finished" : ""}" data-game="${g.id}" aria-label="${escape(g.away.code)} versus ${escape(g.home.code)}. ${escape(label)}"><div class="game-clock-panel">${statusMarkup}<time class="game-date" datetime="${escape(g.start)}" title="Start time in Europe/Budapest · NHL game day: ${date}">${escape(start)}</time></div><div class="game-matchup">${side(g.away)}${side(g.home)}</div><div class="game-shots" aria-label="Shots on goal"><span class="game-shot game-shot-away" aria-label="${escape(g.away.code)} shots on goal">${shots(g.away)}</span><span class="game-sog">SOG</span><span class="game-shot game-shot-home" aria-label="${escape(g.home.code)} shots on goal">${shots(g.home)}</span></div></article>`;
               })
               .join("")
           : `<p class="games-message">${stale ? "No games in the saved schedule." : "No NHL games scheduled for this game day."}</p>`,

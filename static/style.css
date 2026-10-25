@@ -6720,6 +6720,9 @@ footer .footer-copy small,
 .game-sog{top:37.5%;height:25%;font-size:4.8cqw;font-weight:400;letter-spacing:.015em}
 :root:not([data-theme="light"]) .game-card.is-live .game-status,.game-card.is-live .game-status{color:var(--game-ink)}
 .game-card.is-live .game-clock{color:var(--game-live-ink)}
+.game-card.is-finished .game-clock-panel{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3cqw}
+.game-card.is-finished .game-status{position:static;width:auto;height:auto;font-size:5.6cqw;letter-spacing:.025em}
+.game-card.is-finished .game-date{position:static;width:auto;height:auto;font-size:2.8cqw}
 
 :root[data-theme="light"] .game-card{--game-panel:transparent;--game-ink:var(--theme-strong);--game-live-ink:var(--theme-ink)}
 
