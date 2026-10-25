@@ -197,3 +197,12 @@ test("team-scoped NHL adapter shares edge snapshots and uses dated previews with
     Date.now = originalNow;
   }
 });
+
+
+test("official NHL separators need no spaces and preserve hyphenated player names",async()=>{
+ const {parseArticle,dailyUrl}=await libraryModule;const url=dailyUrl(now);
+ const body=group("Lightning").replace("Alpha Left One -- Alpha Center One -- Alpha Right One","Jake Guentzel--Gage Goncalves-- Brayden Point").replace("Alpha Left Two -- Alpha Center Two -- Alpha Right Two","Pierre-Luc Dubois—Alex Barré-Boulet – Jean-Gabriel Pageau");
+ const parsed=parseArticle(article(url,body),url,now).teams["tampa-bay-lightning"];
+ assert.deepEqual(parsed.forwards[0],["Jake Guentzel","Gage Goncalves","Brayden Point"]);
+ assert.deepEqual(parsed.forwards[1],["Pierre-Luc Dubois","Alex Barré-Boulet","Jean-Gabriel Pageau"]);
+});

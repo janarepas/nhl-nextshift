@@ -150,4 +150,9 @@ uses the same persistent 24-hour cache as other player data.
 
 A főoldal meglévő eredményjelzői 500:200 arányú, legfeljebb 250 × 100 CSS-pixeles megjelenítést kapnak. Az idő és a budapesti meccsdátum balra, az egymás fölé rendezett csapatsávok középen, a kapuralövések jobbra láthatók. A háttérlogók enyhén elmosottak, a csapatszín felülről lefelé sötét átmenetet kap. Az előtérlogók és az eredmény élesek; a gólszerzőket megnyitó eredménygombok megmaradtak.
 
-A FUT/PRE, élő, szünet, OT/SO, végleges, halasztott és mentett állapotok továbbra is forrásadatot mutatnak. A kapuralövés az NHL `sog` mezőjéből származik; hiányzó adatnál „—” jelenik meg. A dizájn nem indít új adatlekérést, és nem tartalmaz látványtervből átvett meccsadatokat. A gyártási méretkeret CSS-re 105 KB, JavaScriptre 100 KB; mindkettőt a buildteszt ellenőrzi.
+A FUT/PRE, élő, szünet, OT/SO, végleges, halasztott és mentett állapotok továbbra is forrásadatot mutatnak. A kapuralövés az NHL `sog` mezőjéből származik; hiányzó adatnál „—” jelenik meg. A dizájn nem indít új adatlekérést, és nem tartalmaz látványtervből átvett meccsadatokat. A gyártási méretkeret CSS-re 105 KB, JavaScriptre 103 KB; mindkettőt a buildteszt ellenőrzi.
+
+
+A hiányzó kapuralövéseket a games adapter ugyanazon meccs hivatalos NHL boxscore-válaszából egészíti ki: játékazonosító, két csapat és eredmény egyezése szükséges. Legfeljebb négy párhuzamos lekérés és négy másodperces közös időkeret védi az eredménylista elérhetőségét. A meccseredmény nem tűnik el részlethibánál; a hiányzó lövések továbbra sem válnak nullává. Hiányos végleges eredménynél öt perc után újra próbál frissíteni a látható lista. A v2 szervercache nem veszi át a korábbi, lövésadat nélküli hosszú cache-t.
+
+A sorfeldolgozó a szóköz nélküli `--`, `—` és `–` elválasztókat is kezeli; a játékosnéven belüli egyszeres kötőjel megmarad. A mentett, összevont Tampa-nevek külön játékosként helyreállnak. A Mitch/Mitchell Gibson névváltozat pontos normalizálást és egyszeres kapusmegjelenítést kap; más Gibson nevű játékoshoz nincs családnév-alapú összerendelés.

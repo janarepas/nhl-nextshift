@@ -1,4 +1,5 @@
 // Fixed official NHL score endpoint; never a user-supplied upstream URL.
+import { addGameShots } from "../../lib/game-shots.js";
 import { normalizeScoreGoals } from "../../lib/game-goals.js";
 const lastGoodMaxAge = 24 * 60 * 60 * 1000;
 export async function onRequestGet({ request }) {
@@ -10,9 +11,9 @@ export async function onRequestGet({ request }) {
   )
     return Response.json({ error: "Invalid game date." }, { status: 400 });
   const cache = globalThis.caches?.default;
-  const key = new Request(new URL("/api/games?date=" + date, request.url));
+  const key = new Request(new URL("/api/games-v2?date=" + date, request.url));
   const lastGoodKey = new Request(
-    new URL("/api/games-last-good?date=" + date, request.url),
+    new URL("/api/games-last-good-v2?date=" + date, request.url),
   );
   if (cache) {
     try {
@@ -82,6 +83,7 @@ export async function onRequestGet({ request }) {
         goalDetails: normalizeScoreGoals(g),
       };
     });
+    await addGameShots(games);
     const currentEasternDay = new Intl.DateTimeFormat("en-CA", {
       timeZone: "America/New_York",
       year: "numeric",
@@ -90,7 +92,7 @@ export async function onRequestGet({ request }) {
     }).format(new Date());
     const settled =
       date < currentEasternDay &&
-      games.every((game) => ["OFF", "FINAL"].includes(game.state));
+      games.every((game) => ["OFF", "FINAL"].includes(game.state) && [game.away,game.home].every(team => Number.isInteger(team.shots)));
     const result = Response.json(
       { date, games },
       {

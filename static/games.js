@@ -143,6 +143,7 @@
     if (data?.games.some(live)) return 60000;
     if (data?.games.some((g) => ["FUT", "PRE"].includes(g.state)))
       return 300000;
+    if (data?.games.some(g => ["FINAL","OFF"].includes(g.state) && [g.away,g.home].some(t => t.shots == null))) return 300000;
     return 21600000;
   }
   function mount() {

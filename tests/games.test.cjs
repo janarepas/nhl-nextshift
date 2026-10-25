@@ -10,9 +10,11 @@ const libraryUrl =
       .readFileSync("lib/game-goals.js", "utf8")
       .replace(/^import\s[^;]+;\s*/gm, ""),
   ).toString("base64");
+const shotsUrl="data:text/javascript;base64,"+Buffer.from(fs.readFileSync("lib/game-shots.js","utf8")).toString("base64");
 const handlerSource = fs
   .readFileSync("functions/api/games.js", "utf8")
-  .replace('"../../lib/game-goals.js"', JSON.stringify(libraryUrl));
+  .replace('"../../lib/game-goals.js"', JSON.stringify(libraryUrl))
+  .replace('"../../lib/game-shots.js"', JSON.stringify(shotsUrl));
 const handler = import(
   "data:text/javascript;base64," + Buffer.from(handlerSource).toString("base64")
 );
@@ -64,7 +66,7 @@ test("game dates and start times use the client timezone and preserve next-day E
   assert.equal(GameScores.interval({ games: [] }), 21600000);
   assert.equal(
     GameScores.interval({ games: [{ ...live, state: "OFF" }] }),
-    21600000,
+    300000,
     "Completed results do not need live-score polling",
   );
 });
@@ -175,8 +177,8 @@ test("past completed scores use a six-hour shared cache while live and unplayed 
             {
               ...rawGame(),
               gameState: state,
-              awayTeam: { abbrev: "ANA", score: 2 },
-              homeTeam: { abbrev: "NYR", score: 1 },
+              awayTeam: { abbrev: "ANA", score: 2, sog:30 },
+              homeTeam: { abbrev: "NYR", score: 1, sog:21 },
             },
           ],
         });
@@ -230,7 +232,7 @@ test("scores retain same-date last-good data only for transient failures and nev
     const expected = await first.json();
     await onRequestGet(request("2026-10-20"));
     assert.equal(calls, 1, "Fresh short cache shares the source response");
-    records.delete("https://test/api/games?date=2026-10-20");
+    records.delete("https://test/api/games-v2?date=2026-10-20");
     for (const transient of ["503", "connection"]) {
       mode = transient;
       const saved = await onRequestGet(request("2026-10-20"));

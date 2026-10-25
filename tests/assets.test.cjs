@@ -24,8 +24,8 @@ test("production assets are reproducible, content-addressed and smaller than the
       hash,
     );
     assert.ok(
-      content.length < (type === "css" ? 105000 : 100000),
-      `${type} production budget (105KB CSS for the Figma scoreboard; 100KB JS including verified results and goal-scorer interactions)`,
+      content.length < (type === "css" ? 105000 : 103000),
+      `${type} production budget (105KB CSS for the Figma scoreboard; 103KB JS including saved-lineup repairs and verified goal-scorer interactions)`,
     );
   }
   assert.match(

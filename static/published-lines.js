@@ -5,7 +5,9 @@
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-      .replace(/[^a-z0-9]/g, "");
+      .replace(/[^a-z0-9]/g, "")
+      .replace(/^mitchellgibson$/, "mitchgibson");
+  const splitNames = value => String(value).split(/\s*(?:-{2,}|[—–])\s*/).map(name=>name.trim());
   // Explicit, verified source-name aliases only; never match by surname alone.
   const aliases = Object.freeze({
     nicholasrobertson: 8481582,
@@ -67,6 +69,25 @@
   function reconcile(data, roster) {
     if (!valid(data)) return data;
     const copy = structuredClone(data);
+    // Repair old saved placeholders containing an unseparated pair of names.
+    for(const [key,group,width] of [["forwards","F",3],["defense","D",2]]) {
+      copy[key]=copy[key].map(row=>{
+        const expanded=row.flatMap(id=>{
+          if(typeof id!=="string")return [id];
+          const entry=copy.extra.find(player=>player.id===id);
+          const parts=splitNames(entry?.name || id.replace(/^dfo:/,""));
+          if(parts.length<2 || parts.some(name=>!name || !/^[\p{L}\p{M} .’'\-]+$/u.test(name)))return [id];
+          return parts.map(name=>{
+            const player=matchingPlayer(name,roster,group);
+            if(player)return player.id;
+            const sourceId="dfo:"+norm(name),words=name.split(/\s+/);
+            if(!copy.extra.some(player=>player.id===sourceId))copy.extra.push({id:sourceId,name,first:words.slice(0,-1).join(" "),last:words.at(-1),number:"—",pos:"—",group,image:"",unmatched:true});
+            return sourceId;
+          });
+        });
+        return expanded.length<=width ? expanded : row;
+      });
+    }
     const replacements = new Map();
     const allIds = [
       copy.forwards.flat(),
@@ -91,6 +112,10 @@
         groups.length === 1 ? groups[0] : null,
       );
       if (match) replacements.set(id, match.id);
+      else if(typeof id==="string" && id.startsWith("dfo:") && norm(p?.name || id.slice(4))==="mitchgibson" && id!=="dfo:mitchgibson") {
+        replacements.set(id,"dfo:mitchgibson");
+        if(p && !copy.extra.some(player=>player.id==="dfo:mitchgibson"))copy.extra.push({...p,id:"dfo:mitchgibson"});
+      }
     }
     // Older snapshots can have source IDs in rows but no corresponding extra
     // record. Repair the rows themselves, rather than trusting that index.
@@ -99,7 +124,7 @@
       copy[key] = copy[key].map((row) =>
         row.map((id) => replacements.get(id) ?? id),
       );
-    copy.goalies = copy.goalies.map((id) => replacements.get(id) ?? id);
+    copy.goalies = [...new Set(copy.goalies.map((id) => replacements.get(id) ?? id))];
     return copy;
   }
   function reconcileState(data, players) {
@@ -185,9 +210,10 @@
       if (!Array.isArray(value) || value.length > maxRows)
         throw Error("Invalid lineup structure in the feed.");
       return value.map((row) => {
-        if (!Array.isArray(row) || row.length < 1 || row.length > width)
-          throw Error("Invalid unit size in the feed.");
-        const ids = row.map((name) => player(name, group, matchGroup));
+        if (!Array.isArray(row))throw Error("Invalid unit size in the feed.");
+        const names=row.flatMap(name=>typeof name==="string" ? splitNames(name) : [name]);
+        if(names.length<1 || names.length>width)throw Error("Invalid unit size in the feed.");
+        const ids = names.map((name) => player(name, group, matchGroup));
         if (new Set(ids).size !== ids.length)
           throw Error("Duplicate player in a unit.");
         return ids;
@@ -195,7 +221,7 @@
     };
     const forwards = rows(entry.forwards, 3, 4, "F"),
       defense = rows(entry.defense, 2, 4, "D");
-    const goalies = rows(entry.goalies, 1, 3, "G").flat();
+    const goalies = [...new Set(rows(entry.goalies, 1, 3, "G").flat())];
     const pp = rows(
       [entry.pp1, entry.pp2].filter((row) => Array.isArray(row) && row.length),
       5,

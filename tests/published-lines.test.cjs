@@ -378,3 +378,30 @@ test("verified source spelling mistakes resolve to the correct current-roster id
     undefined,
   );
 });
+
+
+test("Mitch and Mitchell Gibson match exactly and duplicate goalie aliases collapse",()=>{
+ const goalie={id:9000001,name:"Mitch Gibson",first:"Mitch",last:"Gibson",group:"G"};
+ assert.equal(PublishedLines.matchingPlayer("Mitchell Gibson",[goalie],"G").id,goalie.id);
+ assert.equal(PublishedLines.matchingPlayer("Mitch Gibson",[goalie],"G").id,goalie.id);
+ assert.equal(PublishedLines.matchingPlayer("John Gibson",[goalie],"G"),undefined);
+ const data=feed();data.teams["tampa-bay-lightning"].goalies=[["Mitch Gibson"],["Mitchell Gibson"]];
+ const parsed=PublishedLines.parse(data,[...roster,goalie],"tampa-bay-lightning","TBL",now);
+ assert.deepEqual(parsed.goalies,[goalie.id]);
+ const old=structuredClone(parsed);old.goalies=["dfo:mitchgibson","dfo:mitchellgibson"];
+ old.extra.push({id:"dfo:mitchgibson",name:"Mitch Gibson",first:"Mitch",last:"Gibson",group:"G"},{id:"dfo:mitchellgibson",name:"Mitchell Gibson",first:"Mitchell",last:"Gibson",group:"G"});
+ assert.deepEqual(PublishedLines.reconcile(old,[...roster,goalie]).goalies,[goalie.id]);
+ assert.deepEqual(PublishedLines.reconcile(old,roster).goalies,["dfo:mitchgibson"]);
+});
+
+test("Tampa names separated without spaces stay individual players, including old caches",()=>{
+ const data=feed();data.teams["tampa-bay-lightning"].forwards[0]=["Jake Guentzel","Gage Goncalves-- Brayden Point"];
+ const parsed=parse(data);
+ assert.deepEqual(parsed.forwards[0],["dfo:jakeguentzel","dfo:gagegoncalves",8478010]);
+ assert.ok(!parsed.extra.some(p=>p.name.includes("--")));
+ const old=parse(feed());old.forwards[0]=["dfo:jakeguentzel","dfo:gagegoncalvesbraydenpoint"];
+ old.extra.push({id:"dfo:gagegoncalvesbraydenpoint",name:"Gage Goncalves-- Brayden Point",first:"Gage Goncalves-- Brayden",last:"Point",group:"F"});
+ const repaired=PublishedLines.reconcileState(old,roster);
+ assert.deepEqual(repaired.lineData.forwards[0],["dfo:jakeguentzel","dfo:gagegoncalves",8478010]);
+ assert.ok(!repaired.players.some(p=>p.id==="dfo:gagegoncalvesbraydenpoint"));
+});
