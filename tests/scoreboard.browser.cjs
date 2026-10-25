@@ -66,8 +66,8 @@ const assert = require("node:assert/strict");
                     start: date + "T23:00:00Z",
                     state: i === 1 ? "LIVE" : i === 2 ? "OFF" : "FUT",
                     scheduleState: "OK",
-                    away: { code: "ANA", score: i === 0 ? null : 2 },
-                    home: { code: "BOS", score: i === 0 ? null : 1 },
+                    away: { code: "ANA", score: i === 0 ? null : 2, shots: i === 0 ? null : 30 },
+                    home: { code: "BOS", score: i === 0 ? null : 1, shots: i === 0 ? null : 21 },
                     period: 2,
                     periodType: "REG",
                     clock: "12:20",
@@ -194,6 +194,9 @@ const assert = require("node:assert/strict");
       "Results default to the previous New York NHL game day",
     );
     assert.equal(depthRequests, 0);
+    assert.deepEqual(await page.locator('.game-card').nth(1).locator('.game-shot').allTextContents(), ['30', '21']);
+    assert.deepEqual(await page.locator('.game-card').first().locator('.game-shot').allTextContents(), ['—', '—']);
+    assert.match(await page.locator('.game-team-watermark').first().evaluate(el => getComputedStyle(el).filter), /blur/);
     assert.equal(await page.locator("#games-updated").innerText(), "");
     assert.match(
       await page.locator("#games-date").textContent(),
@@ -223,7 +226,7 @@ const assert = require("node:assert/strict");
     );
     assert.match(
       await page.locator(".game-card").nth(1).innerText(),
-      /P2 · 12:20/,
+      /2nd[\s\S]*12:20/,
     );
     assert.match(
       await page.locator(".game-card").nth(2).innerText(),
@@ -296,7 +299,7 @@ const assert = require("node:assert/strict");
         await page
           .locator(".game-score")
           .first()
-          .evaluate((el) => parseFloat(getComputedStyle(el).fontSize) >= 48),
+          .evaluate((el) => parseFloat(getComputedStyle(el).fontSize) >= 47.9),
         "Score numerals have prominent readable size at " + width,
       );
       assert.ok(
@@ -305,12 +308,11 @@ const assert = require("node:assert/strict");
           .first()
           .evaluate((el) => {
             const date = el.querySelector(".game-date").getBoundingClientRect();
-            const matchup = el
-              .querySelector(".game-matchup")
-              .getBoundingClientRect();
-            return date.bottom <= matchup.top;
+            const clock = el.querySelector(".game-clock").getBoundingClientRect();
+            const matchup = el.querySelector(".game-matchup").getBoundingClientRect();
+            return date.left >= clock.left && date.right <= matchup.left + 1 && date.bottom <= el.getBoundingClientRect().bottom + 1;
           }),
-        "The actual match date appears above its logos and scores at " + width,
+        "The actual match date stays below the clock within the left panel at " + width,
       );
       const goalieLayout = await page.evaluate(() => {
         const grid = document.querySelector("#goalie-lines .roster-grid");

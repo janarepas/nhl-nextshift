@@ -264,3 +264,24 @@ test("scores retain same-date last-good data only for transient failures and nev
     Date.now = originalNow;
   }
 });
+
+
+test("score adapters retain official shots without turning missing shots into zero", async () => {
+  const raw = rawGame();
+  raw.awayTeam.sog = 30;
+  raw.homeTeam.sog = 0;
+  const normalized = GameScores.normalize({currentDate:"2026-10-20",games:[raw]});
+  assert.equal(normalized.games[0].away.shots,30);
+  assert.equal(normalized.games[0].home.shots,0);
+  delete raw.homeTeam.sog;
+  assert.equal(GameScores.normalize({currentDate:"2026-10-20",games:[raw]}).games[0].home.shots,null);
+  const originalFetch=global.fetch,originalCaches=global.caches;
+  try {
+    global.caches=undefined;
+    global.fetch=async()=>Response.json({currentDate:"2026-10-20",games:[raw]});
+    const response=await (await handler).onRequestGet({request:new Request("https://test/api/games?date=2026-10-20")});
+    const data=await response.json();
+    assert.equal(data.games[0].away.shots,30);
+    assert.equal(data.games[0].home.shots,null);
+  } finally {global.fetch=originalFetch;global.caches=originalCaches;}
+});

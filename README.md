@@ -144,3 +144,10 @@ opened. Season totals, NHL career totals, playoffs, awards and NHL season histor
 are displayed separately, with missing fields left absent. Published goalie rates
 are used directly; rates from team stints or seasons are not averaged. The profile
 uses the same persistent 24-hour cache as other player data.
+
+
+## Kompakt, Figma-alapú eredményjelző
+
+A főoldal meglévő eredményjelzői 500:200 arányú, legfeljebb 250 × 100 CSS-pixeles megjelenítést kapnak. Az idő és a budapesti meccsdátum balra, az egymás fölé rendezett csapatsávok középen, a kapuralövések jobbra láthatók. A háttérlogók enyhén elmosottak, a csapatszín felülről lefelé sötét átmenetet kap. Az előtérlogók és az eredmény élesek; a gólszerzőket megnyitó eredménygombok megmaradtak.
+
+A FUT/PRE, élő, szünet, OT/SO, végleges, halasztott és mentett állapotok továbbra is forrásadatot mutatnak. A kapuralövés az NHL `sog` mezőjéből származik; hiányzó adatnál „—” jelenik meg. A dizájn nem indít új adatlekérést, és nem tartalmaz látványtervből átvett meccsadatokat. A gyártási méretkeret CSS-re 105 KB, JavaScriptre 100 KB; mindkettőt a buildteszt ellenőrzi.

@@ -58,6 +58,7 @@ export async function onRequestGet({ request }) {
         return {
           code: t.abbrev,
           score: Number.isInteger(t.score) && t.score >= 0 ? t.score : null,
+          shots: Number.isInteger(t.sog) && t.sog >= 0 ? t.sog : null,
         };
       };
       return {

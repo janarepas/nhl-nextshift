@@ -53,10 +53,12 @@
         away: {
           code: g.awayTeam?.abbrev,
           score: Number.isInteger(g.awayTeam?.score) ? g.awayTeam.score : null,
+          shots: Number.isInteger(g.awayTeam?.sog) && g.awayTeam.sog >= 0 ? g.awayTeam.sog : null,
         },
         home: {
           code: g.homeTeam?.abbrev,
           score: Number.isInteger(g.homeTeam?.score) ? g.homeTeam.score : null,
+          shots: Number.isInteger(g.homeTeam?.sog) && g.homeTeam.sog >= 0 ? g.homeTeam.sog : null,
         },
         period: g.periodDescriptor?.number || null,
         periodType: g.periodDescriptor?.periodType || "",
@@ -241,14 +243,24 @@
                   const score = played
                     ? `<button class="game-score" type="button" data-game="${g.id}" data-team="${escape(t.code)}" aria-label="${escape(t.code)} ${t.score} ${t.score === 1 ? "goal" : "goals"}. Show goal scorers" aria-expanded="false" aria-controls="game-goal-tooltip">${t.score}</button>`
                     : '<strong class="game-score" aria-label="Not started">—</strong>';
-                  return `<div class="game-side"><span class="game-team"><img src="https://assets.nhle.com/logos/nhl/svg/${t.code}_${document.documentElement.dataset.theme === "dark" ? "dark" : "light"}.svg" alt="" loading="lazy" decoding="async" width="56" height="56">${escape(t.code)}</span>${score}</div>`;
+                  const color = typeof teams !== "undefined" ? teams.find(team => team[0] === t.code)?.[2] : null;
+                  const safeColor = /^#[a-f0-9]{6}$/i.test(color || "") ? color : "#42454a";
+                  const logo = `https://assets.nhle.com/logos/nhl/svg/${t.code}_${document.documentElement.dataset.theme === "dark" ? "dark" : "light"}.svg`;
+                  return `<div class="game-side" style="--game-team-color:${safeColor}"><img class="game-team-watermark" src="${logo}" alt="" loading="lazy" decoding="async" aria-hidden="true"><span class="game-team"><img src="${logo}" alt="" loading="lazy" decoding="async" width="70" height="70"><span class="game-team-code">${escape(t.code)}</span></span>${score}</div>`;
                 };
                 const stateLabel =
                   ["FUT", "PRE"].includes(g.state) &&
                   !["PPD", "CNCL"].includes(g.scheduleState)
                     ? "Scheduled"
                     : label;
-                return `<article class="game-card${!stale && live(g) ? " is-live" : ""}" data-game="${g.id}" aria-label="${escape(g.away.code)} versus ${escape(g.home.code)}"><time class="game-date" datetime="${escape(g.start)}" title="Start time in Europe/Budapest · NHL game day: ${date}">${escape(start)}</time><div class="game-matchup">${side(g.away)}${side(g.home)}</div><span class="game-status">${escape(stateLabel)}</span></article>`;
+                const running = !stale && live(g) && !["PPD", "CNCL"].includes(g.scheduleState);
+                const regularPeriod = g.period ? `${g.period}${g.period === 1 ? "st" : g.period === 2 ? "nd" : g.period === 3 ? "rd" : "th"}` : "Live";
+                const periodLabel = running ? (g.periodType === "SO" ? "SO" : g.periodType === "OT" ? "OT" : regularPeriod) : stateLabel;
+                const clockLabel = running ? (g.intermission ? "INT" : g.clock || "—")
+                  : ["OFF", "FINAL"].includes(g.state) ? (["OT", "SO"].includes(g.outcome) ? g.outcome : "FT")
+                  : ["FUT", "PRE"].includes(g.state) && !["PPD", "CNCL"].includes(g.scheduleState) ? formatter("score-start", zone, { hour:"2-digit", minute:"2-digit", hourCycle:"h23" }).format(new Date(g.start)) : "—";
+                const shots = (t) => !["FUT", "PRE"].includes(g.state) && Number.isInteger(t.shots) && t.shots >= 0 ? t.shots : "—";
+                return `<article class="game-card${running ? " is-live" : ""}" data-game="${g.id}" aria-label="${escape(g.away.code)} versus ${escape(g.home.code)}. ${escape(label)}"><div class="game-clock-panel"><span class="game-status">${escape(periodLabel)}</span><span class="game-clock">${escape(clockLabel)}</span><time class="game-date" datetime="${escape(g.start)}" title="Start time in Europe/Budapest · NHL game day: ${date}">${escape(start)}</time></div><div class="game-matchup">${side(g.away)}${side(g.home)}</div><div class="game-shots" aria-label="Shots on goal"><span class="game-shot game-shot-away" aria-label="${escape(g.away.code)} shots on goal">${shots(g.away)}</span><span class="game-sog">SOG</span><span class="game-shot game-shot-home" aria-label="${escape(g.home.code)} shots on goal">${shots(g.home)}</span></div></article>`;
               })
               .join("")
           : `<p class="games-message">${stale ? "No games in the saved schedule." : "No NHL games scheduled for this game day."}</p>`,
