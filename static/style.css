@@ -6698,7 +6698,7 @@ footer .footer-copy small,
 
 /* Figma scoreboard: compact 500:200 scene at half size; live data stays intact. */
 .games-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:16px 20px;min-block-size:100px}
-.game-card{--game-panel:#212223;--game-ink:#bfbbb2;--game-live-ink:#f3f0e8;display:grid;grid-template-columns:40% 40% 20%;width:100%;max-width:250px;aspect-ratio:5/2;container-type:inline-size;overflow:hidden;padding:0;background:var(--game-panel);color:var(--game-ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.game-card{--game-panel:transparent;--game-ink:#bfbbb2;--game-live-ink:#f3f0e8;display:grid;grid-template-columns:40% 40% 20%;width:100%;max-width:250px;aspect-ratio:5/2;container-type:inline-size;overflow:hidden;padding:0;background:var(--game-panel);color:var(--game-ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
 .game-card::before{content:none}
 .game-clock-panel,.game-shots{position:relative;min-width:0}
 .game-card .game-status,.game-clock,.game-card .game-date{position:absolute;left:0;width:100%;display:flex;justify-content:center;align-items:center;margin:0;line-height:1;white-space:nowrap;color:var(--game-ink);text-align:center}
@@ -6721,4 +6721,4 @@ footer .footer-copy small,
 :root:not([data-theme="light"]) .game-card.is-live .game-status,.game-card.is-live .game-status{color:var(--game-ink)}
 .game-card.is-live .game-clock{color:var(--game-live-ink)}
 
-:root[data-theme="light"] .game-card{--game-panel:var(--theme-paper);--game-ink:var(--theme-strong);--game-live-ink:var(--theme-ink)}
+:root[data-theme="light"] .game-card{--game-panel:transparent;--game-ink:var(--theme-strong);--game-live-ink:var(--theme-ink)}

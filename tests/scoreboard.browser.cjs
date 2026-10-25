@@ -321,10 +321,10 @@ const assert = require("node:assert/strict");
         assert.ok(cards[1].left>=cards[0].right,'Desktop scorecards sit side by side');
       }
       await page.evaluate(()=>document.documentElement.dataset.theme='light');
-      assert.equal(await page.locator('.game-card').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(255, 255, 255)');
+      assert.equal(await page.locator('.game-card').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgba(0, 0, 0, 0)');
       assert.notEqual(await page.locator('.game-clock').first().evaluate(el=>getComputedStyle(el).color),'rgb(243, 240, 232)');
       await page.evaluate(()=>document.documentElement.dataset.theme='dark');
-      assert.equal(await page.locator('.game-card').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(33, 34, 35)');
+      assert.equal(await page.locator('.game-card').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgba(0, 0, 0, 0)');
       const goalieLayout = await page.evaluate(() => {
         const grid = document.querySelector("#goalie-lines .roster-grid");
         const outer = document.querySelector("#goalie-lines");
