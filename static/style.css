@@ -6709,9 +6709,9 @@ footer .footer-copy small,
 .game-card .game-side{position:relative;isolation:isolate;min-height:0;overflow:hidden;background:var(--game-team-color)}
 .game-side::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0009,transparent);pointer-events:none;z-index:1}
 .game-team-watermark{position:absolute;left:0;top:-32.5%;width:100%;height:165%;object-fit:contain;opacity:.18;filter:grayscale(1) blur(.5cqw);z-index:0;pointer-events:none}
-.game-card .game-team{position:absolute;left:2.5%;top:15%;display:block;width:42.5%;height:70%;z-index:2}
-.game-card .game-team img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 1px #0006)}
-.game-team-code{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.game-card .game-team{position:absolute;left:2.5%;top:8%;display:flex;flex-direction:column;align-items:center;width:42.5%;height:84%;z-index:2}
+.game-card .game-team img{display:block;width:100%;height:72%;object-fit:contain;filter:drop-shadow(0 1px 1px #0006)}
+.game-team-code{display:block;color:#fff;font-size:2.8cqw;font-weight:700;line-height:1.2;letter-spacing:.04em;text-shadow:0 1px 2px #000;white-space:nowrap}
 .game-card .game-score{position:absolute;left:25%;top:0;display:flex;align-items:center;justify-content:center;width:75%;height:100%;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;color:#fff;font-family:inherit;font-size:19.2cqw;font-weight:700;line-height:1;letter-spacing:-.04em;z-index:3;text-shadow:0 1px 1px #0003}
 .game-card button.game-score:hover,.game-card button.game-score[aria-expanded="true"]{background:#ffffff12}
 .game-card button.game-score:focus-visible{outline:2px solid #fff;outline-offset:-3px}
@@ -6726,3 +6726,4 @@ footer .footer-copy small,
 /* Match the lineup labels' subtle one-pixel dividers between scoreboards. */
 .game-card{position:relative;overflow:visible}
 .game-card:not(:first-child)::before{content:'';position:absolute;inset:0 auto 0 -10px;border-left:1px solid var(--border);pointer-events:none}
+.game-card::after{content:'';position:absolute;inset:auto 0 -8px;height:0;border-top:1px solid var(--border);pointer-events:none}
