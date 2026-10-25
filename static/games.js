@@ -246,7 +246,8 @@
                     : '<strong class="game-score" aria-label="Not started">—</strong>';
                   const color = typeof teams !== "undefined" ? teams.find(team => team[0] === t.code)?.[2] : null;
                   const safeColor = /^#[a-f0-9]{6}$/i.test(color || "") ? color : "#42454a";
-                  const logo = `https://assets.nhle.com/logos/nhl/svg/${t.code}_${document.documentElement.dataset.theme === "dark" ? "dark" : "light"}.svg`;
+                  // Team bands stay dark in both themes, so use the dark-background logo.
+                  const logo = `https://assets.nhle.com/logos/nhl/svg/${t.code}_dark.svg`;
                   return `<div class="game-side" style="--game-team-color:${safeColor}"><img class="game-team-watermark" src="${logo}" alt="" loading="lazy" decoding="async" aria-hidden="true"><span class="game-team"><img src="${logo}" alt="" loading="lazy" decoding="async" width="70" height="70"><span class="game-team-code">${escape(t.code)}</span></span>${score}</div>`;
                 };
                 const stateLabel =

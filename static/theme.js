@@ -14,7 +14,7 @@
       const src = image.getAttribute("src");
       const next = src.replace(
         /_(?:light|dark)\.svg$/,
-        theme === "dark" ? "_dark.svg" : "_light.svg",
+        image.closest(".game-side") || theme === "dark" ? "_dark.svg" : "_light.svg",
       );
       if (src !== next) image.setAttribute("src", next);
     }
