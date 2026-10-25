@@ -6724,5 +6724,5 @@ footer .footer-copy small,
 :root[data-theme="light"] .game-card{--game-panel:transparent;--game-ink:var(--theme-strong);--game-live-ink:var(--theme-ink)}
 
 /* Match the lineup labels' subtle one-pixel dividers between scoreboards. */
-.game-card{overflow:visible}
+.game-card{position:relative;overflow:visible}
 .game-card:not(:first-child)::before{content:'';position:absolute;inset:0 auto 0 -10px;border-left:1px solid var(--border);pointer-events:none}
