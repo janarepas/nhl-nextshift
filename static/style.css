@@ -6697,11 +6697,11 @@ footer .footer-copy small,
 }
 
 /* Figma scoreboard: compact 500:200 scene at half size; live data stays intact. */
-.games-track{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:16px 20px;min-block-size:100px}
-.game-card{display:grid;grid-template-columns:40% 40% 20%;width:100%;max-width:250px;aspect-ratio:5/2;container-type:inline-size;overflow:hidden;padding:0;background:#212223;color:#bfbbb2;font-family:-apple-system,BlinkMacSystemFont,"SF Pro","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.games-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:16px 20px;min-block-size:100px}
+.game-card{--game-panel:#212223;--game-ink:#bfbbb2;--game-live-ink:#f3f0e8;display:grid;grid-template-columns:40% 40% 20%;width:100%;max-width:250px;aspect-ratio:5/2;container-type:inline-size;overflow:hidden;padding:0;background:var(--game-panel);color:var(--game-ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
 .game-card::before{content:none}
 .game-clock-panel,.game-shots{position:relative;min-width:0}
-.game-card .game-status,.game-clock,.game-card .game-date{position:absolute;left:0;width:100%;display:flex;justify-content:center;align-items:center;margin:0;line-height:1;white-space:nowrap;color:#bfbbb2;text-align:center}
+.game-card .game-status,.game-clock,.game-card .game-date{position:absolute;left:0;width:100%;display:flex;justify-content:center;align-items:center;margin:0;line-height:1;white-space:nowrap;color:var(--game-ink);text-align:center}
 .game-card .game-status{top:0;height:50%;font-size:6.4cqw;font-weight:700}
 .game-card .game-clock{top:0;height:100%;font-size:12.8cqw;font-weight:700;letter-spacing:-.035em}
 .game-card .game-date{top:50%;height:50%;font-size:2.8cqw;letter-spacing:-.025em}
@@ -6715,8 +6715,10 @@ footer .footer-copy small,
 .game-card .game-score{position:absolute;left:25%;top:0;display:flex;align-items:center;justify-content:center;width:75%;height:100%;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;color:#fff;font-family:inherit;font-size:19.2cqw;font-weight:700;line-height:1;letter-spacing:-.04em;z-index:3;text-shadow:0 1px 1px #0003}
 .game-card button.game-score:hover,.game-card button.game-score[aria-expanded="true"]{background:#ffffff12}
 .game-card button.game-score:focus-visible{outline:2px solid #fff;outline-offset:-3px}
-.game-shot,.game-sog{position:absolute;left:0;width:100%;display:flex;align-items:center;justify-content:center;line-height:1;color:#bfbbb2}
+.game-shot,.game-sog{position:absolute;left:0;width:100%;display:flex;align-items:center;justify-content:center;line-height:1;color:var(--game-ink)}
 .game-shot{height:50%;font-size:7.2cqw;font-weight:700}.game-shot-away{top:0}.game-shot-home{top:50%}
 .game-sog{top:37.5%;height:25%;font-size:4.8cqw;font-weight:400;letter-spacing:.015em}
-:root:not([data-theme="light"]) .game-card.is-live .game-status,.game-card.is-live .game-status{color:#bfbbb2}
-.game-card.is-live .game-clock{color:#f3f0e8}
+:root:not([data-theme="light"]) .game-card.is-live .game-status,.game-card.is-live .game-status{color:var(--game-ink)}
+.game-card.is-live .game-clock{color:var(--game-live-ink)}
+
+:root[data-theme="light"] .game-card{--game-panel:var(--theme-paper);--game-ink:var(--theme-strong);--game-live-ink:var(--theme-ink)}

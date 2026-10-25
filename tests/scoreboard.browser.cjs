@@ -314,6 +314,17 @@ const assert = require("node:assert/strict");
           }),
         "The actual match date stays below the clock within the left panel at " + width,
       );
+      assert.equal(await page.locator('#games-list').evaluate(el=>getComputedStyle(el).display), 'grid');
+      if(width>=820){
+        const cards=await page.locator('.game-card').evaluateAll(es=>es.slice(0,2).map(e=>e.getBoundingClientRect().toJSON()));
+        assert.equal(cards[0].top,cards[1].top,'Desktop scorecards share the first row');
+        assert.ok(cards[1].left>=cards[0].right,'Desktop scorecards sit side by side');
+      }
+      await page.evaluate(()=>document.documentElement.dataset.theme='light');
+      assert.equal(await page.locator('.game-card').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(255, 255, 255)');
+      assert.notEqual(await page.locator('.game-clock').first().evaluate(el=>getComputedStyle(el).color),'rgb(243, 240, 232)');
+      await page.evaluate(()=>document.documentElement.dataset.theme='dark');
+      assert.equal(await page.locator('.game-card').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(33, 34, 35)');
       const goalieLayout = await page.evaluate(() => {
         const grid = document.querySelector("#goalie-lines .roster-grid");
         const outer = document.querySelector("#goalie-lines");
