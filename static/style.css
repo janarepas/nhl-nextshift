@@ -6730,3 +6730,11 @@ footer .footer-copy small,
 .game-card{position:relative;overflow:visible}
 .game-card.has-column-divider::before{content:'';position:absolute;inset:0 auto 0 -10px;border-left:1px solid var(--border);pointer-events:none}
 .game-card.has-row-divider::after{content:'';position:absolute;inset:auto 0 -8px;height:0;border-top:1px solid var(--border);pointer-events:none}
+/* Keep mobile results in a compact, swipeable strip above the lineup. */
+@media(max-width:580px){
+  .daily-games{min-width:0;max-width:100%}
+  .games-track{display:flex;gap:24px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:0;padding-block:4px 12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+  .game-card{flex:0 0 250px;scroll-snap-align:start}
+  .game-card.has-column-divider::before{left:-12px}
+  .game-card.has-row-divider::after{content:none}
+}

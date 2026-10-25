@@ -293,8 +293,8 @@ const assert = require("node:assert/strict");
       assert.ok(
         await page
           .locator("#games-list")
-          .evaluate((el) => el.scrollWidth <= el.clientWidth),
-        "Every score card wraps into the page without horizontal scrolling at " +
+          .evaluate((el) => innerWidth <= 580 ? getComputedStyle(el).overflowX === "auto" && el.clientHeight < 150 : el.scrollWidth <= el.clientWidth),
+        "Mobile results stay in a compact scroll strip; desktop results wrap at " +
           width,
       );
       assert.ok(
@@ -316,7 +316,7 @@ const assert = require("node:assert/strict");
           }),
         "The actual match date stays below the clock within the left panel at " + width,
       );
-      assert.equal(await page.locator('#games-list').evaluate(el=>getComputedStyle(el).display), 'grid');
+      assert.equal(await page.locator('#games-list').evaluate(el=>getComputedStyle(el).display), width <= 580 ? 'flex' : 'grid');
       if(width>=820){
         const cards=await page.locator('.game-card').evaluateAll(es=>es.slice(0,2).map(e=>e.getBoundingClientRect().toJSON()));
         assert.equal(cards[0].top,cards[1].top,'Desktop scorecards share the first row');
