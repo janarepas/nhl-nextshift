@@ -6725,6 +6725,5 @@ footer .footer-copy small,
 
 /* Match the lineup labels' subtle one-pixel dividers between scoreboards. */
 .game-card{position:relative;overflow:visible}
-.game-card:not(:first-child)::before{content:'';position:absolute;inset:0 auto 0 -10px;border-left:1px solid var(--border);pointer-events:none}
-.game-card::after{content:'';position:absolute;inset:auto 0 -8px;height:0;border-top:1px solid var(--border);pointer-events:none}
-@media(max-width:580px){.game-card:not(:first-child)::before{content:none}}
+.game-card.has-column-divider::before{content:'';position:absolute;inset:0 auto 0 -10px;border-left:1px solid var(--border);pointer-events:none}
+.game-card.has-row-divider::after{content:'';position:absolute;inset:auto 0 -8px;height:0;border-top:1px solid var(--border);pointer-events:none}

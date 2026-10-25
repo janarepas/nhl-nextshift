@@ -196,6 +196,19 @@
           ),
         );
     };
+    // Follow actual grid rows rather than assuming a fixed number of columns.
+    function updateDividers() {
+      const cards = [...document.querySelectorAll("#games-list .game-card")];
+      const positions = cards.map(card => ({ left: card.offsetLeft, top: card.offsetTop }));
+      const firstLeft = positions[0]?.left;
+      const lastTop = positions.at(-1)?.top;
+      cards.forEach((card, index) => {
+        card.classList.toggle("has-column-divider", positions[index].left !== firstLeft);
+        card.classList.toggle("has-row-divider", positions[index].top !== lastTop);
+      });
+    }
+    const dividerObserver = new ResizeObserver(updateDividers);
+    dividerObserver.observe(document.querySelector("#games-list"));
     function render() {
       if (
         data &&
@@ -267,6 +280,7 @@
               .join("")
           : `<p class="games-message">${stale ? "No games in the saved schedule." : "No NHL games scheduled for this game day."}</p>`,
       );
+      updateDividers();
       goals?.refresh();
     }
     async function load() {
