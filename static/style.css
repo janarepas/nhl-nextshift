@@ -6722,3 +6722,7 @@ footer .footer-copy small,
 .game-card.is-live .game-clock{color:var(--game-live-ink)}
 
 :root[data-theme="light"] .game-card{--game-panel:transparent;--game-ink:var(--theme-strong);--game-live-ink:var(--theme-ink)}
+
+/* Match the lineup labels' subtle one-pixel dividers between scoreboards. */
+.game-card{overflow:visible}
+.game-card:not(:first-child)::before{content:'';position:absolute;inset:0 auto 0 -10px;border-left:1px solid var(--border);pointer-events:none}
