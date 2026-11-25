@@ -1,411 +1,23 @@
 {
   "version": 1,
-  "checkedAt": "2026-11-24T18:54:30.510Z",
-  "sourceUrl": "https://api-web.nhle.com/v1/score/2026-11-23",
+  "checkedAt": "2026-11-25T17:58:37.560Z",
+  "sourceUrl": "https://api-web.nhle.com/v1/score/2026-11-24",
   "data": {
-    "date": "2026-11-23",
+    "date": "2026-11-24",
     "games": [
       {
-        "id": 2026020378,
-        "start": "2026-11-24T00:00:00Z",
+        "id": 2026020385,
+        "start": "2026-11-25T01:00:00Z",
         "state": "OFF",
         "scheduleState": "OK",
         "away": {
-          "code": "CBJ",
-          "score": 2,
-          "shots": 21
-        },
-        "home": {
-          "code": "NJD",
-          "score": 3,
-          "shots": 30
-        },
-        "period": 3,
-        "periodType": "REG",
-        "clock": "00:00",
-        "intermission": false,
-        "outcome": "REG",
-        "goalDetails": {
-          "gameId": 2026020378,
-          "state": "OFF",
-          "outcome": "REG",
-          "shootout": false,
-          "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020378",
-          "away": {
-            "code": "CBJ",
-            "score": 2,
-            "scorers": [
-              {
-                "playerId": 8475745,
-                "name": "Charlie Coyle",
-                "goals": 1
-              },
-              {
-                "playerId": 8482451,
-                "name": "Mikael Pyyhtia",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          },
-          "home": {
-            "code": "NJD",
-            "score": 3,
-            "scorers": [
-              {
-                "playerId": 8478414,
-                "name": "Timo Meier",
-                "goals": 1
-              },
-              {
-                "playerId": 8475455,
-                "name": "Brenden Dillon",
-                "goals": 1
-              },
-              {
-                "playerId": 8477015,
-                "name": "Connor Brown",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          }
-        }
-      },
-      {
-        "id": 2026020379,
-        "start": "2026-11-24T00:30:00Z",
-        "state": "OFF",
-        "scheduleState": "OK",
-        "away": {
-          "code": "LAK",
-          "score": 2,
-          "shots": 22
-        },
-        "home": {
-          "code": "MTL",
-          "score": 1,
-          "shots": 30
-        },
-        "period": 3,
-        "periodType": "REG",
-        "clock": "00:00",
-        "intermission": false,
-        "outcome": "REG",
-        "goalDetails": {
-          "gameId": 2026020379,
-          "state": "OFF",
-          "outcome": "REG",
-          "shootout": false,
-          "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020379",
-          "away": {
-            "code": "LAK",
-            "score": 2,
-            "scorers": [
-              {
-                "playerId": 8482155,
-                "name": "Alex Laferriere",
-                "goals": 1
-              },
-              {
-                "playerId": 8479675,
-                "name": "Trevor Moore",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          },
-          "home": {
-            "code": "MTL",
-            "score": 1,
-            "scorers": [
-              {
-                "playerId": 8481618,
-                "name": "Alex Newhook",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          }
-        }
-      },
-      {
-        "id": 2026020380,
-        "start": "2026-11-24T00:30:00Z",
-        "state": "OFF",
-        "scheduleState": "OK",
-        "away": {
-          "code": "CGY",
-          "score": 1,
-          "shots": 35
-        },
-        "home": {
-          "code": "OTT",
-          "score": 2,
-          "shots": 31
-        },
-        "period": 3,
-        "periodType": "REG",
-        "clock": "00:00",
-        "intermission": false,
-        "outcome": "REG",
-        "goalDetails": {
-          "gameId": 2026020380,
-          "state": "OFF",
-          "outcome": "REG",
-          "shootout": false,
-          "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020380",
-          "away": {
-            "code": "CGY",
-            "score": 1,
-            "scorers": [
-              {
-                "playerId": 8482679,
-                "name": "Matt Coronato",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          },
-          "home": {
-            "code": "OTT",
-            "score": 2,
-            "scorers": [
-              {
-                "playerId": 8478020,
-                "name": "Michael Amadio",
-                "goals": 1
-              },
-              {
-                "playerId": 8481596,
-                "name": "Shane Pinto",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          }
-        }
-      },
-      {
-        "id": 2026020381,
-        "start": "2026-11-24T00:30:00Z",
-        "state": "OFF",
-        "scheduleState": "OK",
-        "away": {
-          "code": "TOR",
-          "score": 4,
-          "shots": 32
-        },
-        "home": {
-          "code": "NYI",
-          "score": 2,
-          "shots": 22
-        },
-        "period": 3,
-        "periodType": "REG",
-        "clock": "00:00",
-        "intermission": false,
-        "outcome": "REG",
-        "goalDetails": {
-          "gameId": 2026020381,
-          "state": "OFF",
-          "outcome": "REG",
-          "shootout": false,
-          "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020381",
-          "away": {
-            "code": "TOR",
-            "score": 4,
-            "scorers": [
-              {
-                "playerId": 8478057,
-                "name": "Dakota Joshua",
-                "goals": 1
-              },
-              {
-                "playerId": 8475690,
-                "name": "Chris Tanev",
-                "goals": 1
-              },
-              {
-                "playerId": 8486067,
-                "name": "Gavin McKenna",
-                "goals": 1
-              },
-              {
-                "playerId": 8484158,
-                "name": "Easton Cowan",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          },
-          "home": {
-            "code": "NYI",
-            "score": 2,
-            "scorers": [
-              {
-                "playerId": 8477407,
-                "name": "Anthony Duclair",
-                "goals": 1
-              },
-              {
-                "playerId": 8478445,
-                "name": "Mathew Barzal",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          }
-        }
-      },
-      {
-        "id": 2026020382,
-        "start": "2026-11-24T00:30:00Z",
-        "state": "OFF",
-        "scheduleState": "OK",
-        "away": {
-          "code": "UTA",
-          "score": 2,
-          "shots": 35
-        },
-        "home": {
-          "code": "WPG",
-          "score": 4,
-          "shots": 15
-        },
-        "period": 3,
-        "periodType": "REG",
-        "clock": "00:00",
-        "intermission": false,
-        "outcome": "REG",
-        "goalDetails": {
-          "gameId": 2026020382,
-          "state": "OFF",
-          "outcome": "REG",
-          "shootout": false,
-          "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020382",
-          "away": {
-            "code": "UTA",
-            "score": 2,
-            "scorers": [
-              {
-                "playerId": 8479369,
-                "name": "Andrew Peeke",
-                "goals": 1
-              },
-              {
-                "playerId": 8478474,
-                "name": "Lawson Crouse",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          },
-          "home": {
-            "code": "WPG",
-            "score": 4,
-            "scorers": [
-              {
-                "playerId": 8480014,
-                "name": "Gabriel Vilardi",
-                "goals": 3
-              },
-              {
-                "playerId": 8480289,
-                "name": "Morgan Barron",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          }
-        }
-      },
-      {
-        "id": 2026020383,
-        "start": "2026-11-24T02:40:00Z",
-        "state": "OFF",
-        "scheduleState": "OK",
-        "away": {
-          "code": "ANA",
-          "score": 2,
-          "shots": 26
-        },
-        "home": {
-          "code": "SEA",
-          "score": 3,
-          "shots": 21
-        },
-        "period": 3,
-        "periodType": "REG",
-        "clock": "00:00",
-        "intermission": false,
-        "outcome": "REG",
-        "goalDetails": {
-          "gameId": 2026020383,
-          "state": "OFF",
-          "outcome": "REG",
-          "shootout": false,
-          "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020383",
-          "away": {
-            "code": "ANA",
-            "score": 2,
-            "scorers": [
-              {
-                "playerId": 8483445,
-                "name": "Cutter Gauthier",
-                "goals": 1
-              },
-              {
-                "playerId": 8482118,
-                "name": "Sam Colangelo",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          },
-          "home": {
-            "code": "SEA",
-            "score": 3,
-            "scorers": [
-              {
-                "playerId": 8483570,
-                "name": "Ben Meyers",
-                "goals": 1
-              },
-              {
-                "playerId": 8478407,
-                "name": "Vince Dunn",
-                "goals": 1
-              },
-              {
-                "playerId": 8481554,
-                "name": "Kaapo Kakko",
-                "goals": 1
-              }
-            ],
-            "complete": true
-          }
-        }
-      },
-      {
-        "id": 2026020384,
-        "start": "2026-11-24T03:00:00Z",
-        "state": "OFF",
-        "scheduleState": "OK",
-        "away": {
-          "code": "MIN",
+          "code": "VGK",
           "score": 5,
-          "shots": 30
+          "shots": 27
         },
         "home": {
-          "code": "SJS",
-          "score": 2,
+          "code": "EDM",
+          "score": 3,
           "shots": 24
         },
         "period": 3,
@@ -414,51 +26,51 @@
         "intermission": false,
         "outcome": "REG",
         "goalDetails": {
-          "gameId": 2026020384,
+          "gameId": 2026020385,
           "state": "OFF",
           "outcome": "REG",
           "shootout": false,
           "source": "NHL",
-          "sourceUrl": "https://www.nhl.com/gamecenter/2026020384",
+          "sourceUrl": "https://www.nhl.com/gamecenter/2026020385",
           "away": {
-            "code": "MIN",
+            "code": "VGK",
             "score": 5,
             "scorers": [
               {
-                "playerId": 8478864,
-                "name": "Kirill Kaprizov",
-                "goals": 1
-              },
-              {
-                "playerId": 8482122,
-                "name": "Brock Faber",
-                "goals": 1
-              },
-              {
-                "playerId": 8478493,
-                "name": "Joel Eriksson Ek",
+                "playerId": 8478403,
+                "name": "Jack Eichel",
                 "goals": 2
               },
               {
-                "playerId": 8476399,
-                "name": "Blake Coleman",
+                "playerId": 8484803,
+                "name": "Trevor Connelly",
+                "goals": 2
+              },
+              {
+                "playerId": 8475343,
+                "name": "Nic Dowd",
                 "goals": 1
               }
             ],
             "complete": true
           },
           "home": {
-            "code": "SJS",
-            "score": 2,
+            "code": "EDM",
+            "score": 3,
             "scorers": [
               {
-                "playerId": 8475726,
-                "name": "Tyler Toffoli",
+                "playerId": 8482703,
+                "name": "Colton Dach",
                 "goals": 1
               },
               {
-                "playerId": 8477505,
-                "name": "Alexander Wennberg",
+                "playerId": 8478402,
+                "name": "Connor McDavid",
+                "goals": 1
+              },
+              {
+                "playerId": 8481617,
+                "name": "Vasily Podkolzin",
                 "goals": 1
               }
             ],
